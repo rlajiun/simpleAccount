@@ -8,7 +8,7 @@ import android.os.Handler;
 import com.unvin.simpleaccount.MainActivity;
 import com.unvin.simpleaccount.R;
 
-public class splashActivity extends Activity {
+public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

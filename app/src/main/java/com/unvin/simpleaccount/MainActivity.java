@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import com.unvin.simpleaccount.models.checkList;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -222,9 +222,14 @@ public class MainActivity extends Activity {
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.adapter_gridview, parent, false);
+
                 holder = new ViewHolder();
 
+                holder.relGridView = (RelativeLayout) convertView.findViewById(R.id.rel_day);
                 holder.tvItemGridView = (TextView) convertView.findViewById(R.id.txt_day);
+                holder.totalItemGridView = (TextView) convertView.findViewById(R.id.txt_total);
+                holder.inItemGridView = (TextView) convertView.findViewById(R.id.txt_income);
+                holder.conItemGridView = (TextView) convertView.findViewById(R.id.txt_consume);
 
                 convertView.setTag(holder);
             } else {
@@ -238,14 +243,20 @@ public class MainActivity extends Activity {
             Integer today = mCal.get(Calendar.DAY_OF_MONTH);
             String sToday = String.valueOf(today);
             if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
-                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.color_000000));
+                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.color_ffffff));
+                holder.relGridView.setBackgroundColor(getResources().getColor(R.color.income));
+                holder.inItemGridView.setTextColor(getResources().getColor(R.color.color_ffffff));
             }
             return convertView;
         }
     }
 
     private class ViewHolder {
+        RelativeLayout relGridView;
         TextView tvItemGridView;
+        TextView totalItemGridView;
+        TextView inItemGridView;
+        TextView conItemGridView;
     }
 
 }
