@@ -3,6 +3,8 @@ package com.unvin.simpleaccount;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,13 @@ import android.widget.Toast;
 import com.unvin.simpleaccount.Activity.ChartActivity;
 import com.unvin.simpleaccount.Activity.InvoiceActivity;
 import com.unvin.simpleaccount.adapter.CheckListAdapter;
+import com.unvin.simpleaccount.database.DBHelper;
 import com.unvin.simpleaccount.models.checkList;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +36,7 @@ public class MainActivity extends Activity {
     ImageButton stat;
     ImageButton invoice;
 
-    ArrayList<checkList> moneyDataList;
+    static ArrayList<checkList> moneyDataList = new ArrayList<checkList>();
 
     private ListView listView;
     private  CheckListAdapter myAdapter;
@@ -86,7 +90,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        this.InitializeCheckData();
+        InitializeCheckData();
 
         myAdapter = new CheckListAdapter(this, moneyDataList);
 
@@ -131,12 +135,24 @@ public class MainActivity extends Activity {
 
     }
 
-    private void InitializeCheckData() {
-        moneyDataList = new ArrayList<checkList>();
+    public void InitializeCheckData() {
+        DBHelper dbHelper = new DBHelper(this, "unvinDB", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(dbHelper.selectShareSQL, null);
 
-        moneyDataList.add(new checkList(R.drawable.sendmoney, "막내동생한테","10,000원","보내기","17일까지"));
-        moneyDataList.add(new checkList(R.drawable.getmoney, "친구한테","30,000원","받기", "18일까지"));
-        moneyDataList.add(new checkList(R.drawable.getmoney, "펭수한테","20,000원","받기", "17일까지"));
+        while(cursor.moveToNext()){
+            String drawableString = "getmoney";
+            String whatString ="받기";
+            if(cursor.getString(1).equals("1")){
+                drawableString="sendmoney";
+                whatString="보내기";
+            }
+            String datetimeStrimg = cursor.getString(5).substring(6);
+            moneyDataList.add((new checkList(getResources().getIdentifier("@drawable/"+drawableString, "drawable", this.getPackageName())
+                    , cursor.getString(3)+"한테",
+                    cursor.getString(2)+"원", whatString, datetimeStrimg+"까지")));
+        }
+
         moneyDataList.add(new checkList(R.drawable.sendmoney, "막내동생한테","10,000원","보내기","17일까지"));
         moneyDataList.add(new checkList(R.drawable.getmoney, "친구한테","30,000원","받기", "18일까지"));
         moneyDataList.add(new checkList(R.drawable.getmoney, "펭수한테","20,000원","받기", "17일까지"));
