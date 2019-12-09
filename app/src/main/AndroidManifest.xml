@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ShareActivity"></activity>
+        <activity android:name=".Activity.splashActivity"></activity>
+        <activity android:name=".Activity.ShareActivity" />
         <activity android:name=".Activity.SubActivity" />
         <activity android:name=".Activity.InvoiceActivity" />
         <activity android:name=".MainActivity">

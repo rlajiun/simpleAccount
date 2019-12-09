@@ -49,26 +49,17 @@ public class AddActivity extends Activity {
 //        spinnerNames = new String[]{};
         spinnerNames = getResources().getStringArray(R.array.category_consume);
         spinnerImages = new int[]{R.drawable.cutlery
-                                ,R.drawable.ic_snack
-                                ,R.drawable.ic_room
-                                ,R.drawable.ic_heart
-                                ,R.drawable.ic_health
-                                ,R.drawable.ic_gift
+                                ,R.drawable.macarons
+                                ,R.drawable.report
                                 ,R.drawable.automobile
-                                ,R.drawable.ic_brush
-                                ,R.drawable.ic_salon
-                                ,R.drawable.ic_towel
-                                ,R.drawable.ic_bone
-                                ,R.drawable.ic_movie
-                                ,R.drawable.ic_health
-                                ,R.drawable.ic_tshirt
-                                ,R.drawable.ic_money_pig
-                                ,R.drawable.ic_phone
-                                ,R.drawable.ic_coffee
-                                ,R.drawable.ic_drinking
-                                ,R.drawable.ic_home_appliance
-                                ,R.drawable.ic_labtop
-                                ,R.drawable.ic_users
+                                ,R.drawable.tickets
+                                ,R.drawable.makeup
+                                ,R.drawable.tshirt
+                                ,R.drawable.toothbrush
+                                ,R.drawable.salary
+                                ,R.drawable.savemoney
+                                ,R.drawable.beer
+                                ,R.drawable.livingroom
                                 ,R.drawable.more};
 
         // 어댑터와 스피너를 연결합니다.

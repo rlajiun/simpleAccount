@@ -6,67 +6,23 @@
         <item>월급 </item>
         <item>보너스</item>
         <item>이자수입</item>
-        <item>특별수당</item>
-        <item>물품판매</item>
         <item>기타</item>
-    </string-array>
-    <string-array name="category_income_drawables">
-        <item>@drawable/ic_money_pig</item>
-        <item>@drawable/ic_wallet</item>
-        <item>@drawable/ic_circle_dollar</item>
-        <item>@drawable/ic_money</item>
-        <item>@drawable/ic_gift</item>
-        <item>@drawable/ic_sell</item>
-        <item>@drawable/more</item>
     </string-array>
 
     <!-- 지출 내역 카테고리 -->
     <string-array name="category_consume">
         <item>식사</item>
         <item>간식</item>
-        <item>숙박</item>
-        <item>데이트</item>
         <item>건강</item>
-        <item>경조사</item>
         <item>교통비</item>
         <item>문화생활</item>
         <item>미용</item>
-        <item>생필품</item>
-        <item>애완용품</item>
-        <item>영화</item>
-        <item>운동</item>
         <item>의류</item>
+        <item>생필품</item>
+        <item>경조사</item>
         <item>저축</item>
-        <item>통신비</item>
-        <item>커피</item>
         <item>술</item>
         <item>가전제품</item>
-        <item>전자제품</item>
-        <item>회비</item>
         <item>기타</item>
-    </string-array>
-    <string-array name="category_consume_drawables">
-        <item>@drawable/cutlery</item>
-        <item>@drawable/ic_snack</item>
-        <item>@drawable/ic_room</item>
-        <item>@drawable/ic_heart</item>
-        <item>@drawable/ic_health</item>
-        <item>@drawable/ic_gift</item>
-        <item>@drawable/automobile</item>
-        <item>@drawable/ic_brush</item>
-        <item>@drawable/ic_salon</item>
-        <item>@drawable/ic_towel</item>
-        <item>@drawable/ic_bone</item>
-        <item>@drawable/ic_movie</item>
-        <item>@drawable/ic_health</item>
-        <item>@drawable/ic_tshirt</item>
-        <item>@drawable/ic_money_pig</item>
-        <item>@drawable/ic_phone</item>
-        <item>@drawable/ic_coffee</item>
-        <item>@drawable/ic_drinking</item>
-        <item>@drawable/ic_home_appliance</item>
-        <item>@drawable/ic_labtop</item>
-        <item>@drawable/ic_users</item>
-        <item>@drawable/more</item>
     </string-array>
 </resources>
