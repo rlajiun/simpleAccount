@@ -2,7 +2,10 @@ package com.unvin.simpleaccount.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,11 +17,24 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.unvin.simpleaccount.R;
 import com.unvin.simpleaccount.adapter.ListAdapter;
+import com.unvin.simpleaccount.database.DBHelper;
+import com.unvin.simpleaccount.models.checkList;
 import com.unvin.simpleaccount.models.gagebu;
 
 import java.util.ArrayList;
 
 public class InvoiceActivity extends Activity implements View.OnClickListener {
+
+    ListView listView;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gagebuDataList.clear();
+        InitializeGagebuData();
+        final ListAdapter myAdapter = new ListAdapter(this, gagebuDataList);
+
+        listView.setAdapter(myAdapter);
+    }
 
     ImageButton back;
 
@@ -28,11 +44,13 @@ public class InvoiceActivity extends Activity implements View.OnClickListener {
     private Boolean isFabOpen = false;
     private FloatingActionButton fab, fab1, fab2, fab3;
 
+    String[] spinnerNames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice);
 
+        spinnerNames = getResources().getStringArray(R.array.category_consume);
         back = (ImageButton)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +72,9 @@ public class InvoiceActivity extends Activity implements View.OnClickListener {
         fab2.setOnClickListener(this);
         fab3.setOnClickListener(this);
 
-        this.InitializeGagebuData();
+        InitializeGagebuData();
 
-        ListView listView = (ListView)findViewById(R.id.invoiceList);
+        listView = (ListView)findViewById(R.id.invoiceList);
         final ListAdapter myAdapter = new ListAdapter(this, gagebuDataList);
 
         listView.setAdapter(myAdapter);
@@ -93,8 +111,6 @@ public class InvoiceActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
         }
-
-
     }
 
     public void anim() {
@@ -124,5 +140,22 @@ public class InvoiceActivity extends Activity implements View.OnClickListener {
         gagebuDataList.add(new gagebu(R.drawable.cutlery, "식사","10,000원","17일 - 4:15"));
         gagebuDataList.add(new gagebu(R.drawable.automobile, "교통","30,000원","17일 - 4:15"));
         gagebuDataList.add(new gagebu(R.drawable.more, "기타","20,000원","17일 - 4:15"));
+
+        DBHelper dbHelper = new DBHelper(this, "unvinDB", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(dbHelper.selectAccountSQL, null);
+
+        while(cursor.moveToNext()){
+            String drawablePositionString = cursor.getString(4);
+            String flagString = "-";
+            if(cursor.getString(0).equals("0")){
+                flagString="+";
+            }
+            gagebuDataList.add((new gagebu(AddActivity.spinnerImages[Integer.parseInt(drawablePositionString)],
+                    spinnerNames[Integer.parseInt(drawablePositionString)], flagString+cursor.getString(1)+"원", cursor.getString(3))));
+
+            Log.d("position", cursor.getString(1));
+        }
+        db.close();
     }
 }

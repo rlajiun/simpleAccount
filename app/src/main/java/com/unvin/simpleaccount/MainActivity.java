@@ -65,6 +65,14 @@ public class MainActivity extends Activity {
     private Calendar mCal;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        moneyDataList.clear();
+        InitializeCheckData();
+        Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

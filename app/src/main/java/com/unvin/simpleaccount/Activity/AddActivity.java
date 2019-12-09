@@ -3,10 +3,13 @@ package com.unvin.simpleaccount.Activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,17 +18,34 @@ import android.widget.Toast;
 
 import com.unvin.simpleaccount.R;
 import com.unvin.simpleaccount.adapter.CategoryAdapter;
+import com.unvin.simpleaccount.database.DBHelper;
 
 import java.util.Calendar;
 
 public class AddActivity extends Activity {
     ImageButton back;
     TextView date, time;
+    Button btnconsumeadd;
+    EditText editTextCost;
 
     private Spinner spinner_cat;
     String[] spinnerNames;
-    int[] spinnerImages;
     int selected_cat_idx = 0;
+    String datemsg, timemsg;
+
+    static int[] spinnerImages = new int[]{R.drawable.cutlery
+            ,R.drawable.macarons
+            ,R.drawable.report
+            ,R.drawable.automobile
+            ,R.drawable.tickets
+            ,R.drawable.makeup
+            ,R.drawable.tshirt
+            ,R.drawable.toothbrush
+            ,R.drawable.salary
+            ,R.drawable.savemoney
+            ,R.drawable.beer
+            ,R.drawable.livingroom
+            ,R.drawable.more};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,29 +68,14 @@ public class AddActivity extends Activity {
 //        spinnerNames = new String[]{"식사", "교통", "기타"};
 //        spinnerNames = new String[]{};
         spinnerNames = getResources().getStringArray(R.array.category_consume);
-        spinnerImages = new int[]{R.drawable.cutlery
-                                ,R.drawable.macarons
-                                ,R.drawable.report
-                                ,R.drawable.automobile
-                                ,R.drawable.tickets
-                                ,R.drawable.makeup
-                                ,R.drawable.tshirt
-                                ,R.drawable.toothbrush
-                                ,R.drawable.salary
-                                ,R.drawable.savemoney
-                                ,R.drawable.beer
-                                ,R.drawable.livingroom
-                                ,R.drawable.more};
+
 
         // 어댑터와 스피너를 연결합니다.
         CategoryAdapter categoryAdapter = new CategoryAdapter(AddActivity.this, spinnerNames, spinnerImages);
         spinner_cat.setAdapter(categoryAdapter);
 
 
-
-
         // 스피너에서 아이템 선택시 호출하도록 합니다.
-
         spinner_cat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -85,7 +90,22 @@ public class AddActivity extends Activity {
 
             }
 
-
+        });
+        final EditText editTextDetail = findViewById(R.id.edit_detail);
+        editTextCost = findViewById(R.id.edit_cost);
+        btnconsumeadd = findViewById(R.id.consumeAddButton);
+        btnconsumeadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editTextCost.getText().toString().length() !=0 ){
+                    DBHelper dbHelper = new DBHelper(view.getContext(), "unvinDB",null, 1);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    db.execSQL(dbHelper.insertAccountSQL, new String[]{"1",editTextCost.getText().toString(), editTextDetail.getText().toString(),
+                            datemsg+timemsg, String.valueOf(selected_cat_idx)});
+                    db.close();
+                    Toast.makeText(view.getContext(), "지출 추가되었습니다", Toast.LENGTH_LONG).show();
+                }
+            }
         });
 
     }
@@ -93,8 +113,8 @@ public class AddActivity extends Activity {
     private void init() {
         //Calendar를 이용하여 년, 월, 일, 시간, 분을 PICKER에 넣어준다.
         final Calendar cal = Calendar.getInstance();
-        String datemsg = String.format("%d년 %d월 %d일", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE));
-        String timemsg = String.format("%d시 %d분", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
+        datemsg = String.format("%d년 %d월 %d일", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE));
+        timemsg = String.format("%d시 %d분", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
 
         //DATE PICKER DIALOG
         date = (TextView)findViewById(R.id.txt_date);
@@ -115,7 +135,6 @@ public class AddActivity extends Activity {
             }
         });
 
-
         //TIME PICKER DIALOG
         time = (TextView)findViewById(R.id.txt_time);
         time.setText(timemsg);
@@ -132,5 +151,7 @@ public class AddActivity extends Activity {
                 dialog.show();
             }
         });
+
+
     }
 }

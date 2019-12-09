@@ -1,6 +1,7 @@
 package com.unvin.simpleaccount.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        Log.d("position", "sample.size: "+ sample.size());
         return sample.size();
     }
 

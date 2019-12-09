@@ -41,6 +41,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public String insertAccountSQL = "insert into account(flag, value, detail, datetime, category) values (?, ?, ?, ?, ?)";
+    public String selectAccountSQL = "select flag, value, detail, datetime, category from account";
     public String selectShareSQL = "SELECT * FROM share";
     public String insertShareSQL = "INSERT INTO share (flag, value, who, detail, datetime)"+
             "VALUES (?, ?, ?, ?, ?)";
