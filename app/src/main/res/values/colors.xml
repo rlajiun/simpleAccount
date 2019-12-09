@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#327ab5</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="disabled">#d3d3d3</color>
+    <color name="transparent">#00000000</color>
+    <color name="pink_s">#FF3399</color>
+    <color name="blue_s">#dddddd</color>
+    <color name="colorSubPrimary">#ff9832</color>
+    <color name="income">#327ab5</color>
+    <color name="consume">#e71e62</color>
+    <color name="background">#eee</color>
+    <color name="ccc">#ccc</color>
+    <color name="color_21a4ff">#21a4ff</color>
+    <color name="color_ffffff">#ffffff</color>
+    <color name="color_000000">#000000</color>
+    <color name="graycolor">#A9A9A9</color>
+    <color name="txt_d">#999999</color>
+    <color name="txt_n">#666666</color>
+    <color name="txt_s">#333333</color>
+    <color name="btn_n">#00000000</color>
+    <color name="btn_s">#33000000</color>
+</resources>

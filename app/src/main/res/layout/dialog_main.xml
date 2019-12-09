@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <ImageButton
+        android:id="@+id/addPay"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/addpay"/>
+    <ImageButton
+        android:id="@+id/subPay"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/subpay"/>
+    <ImageButton
+        android:id="@+id/sharePay"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/share"/>
+</LinearLayout>
