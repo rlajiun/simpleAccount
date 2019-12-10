@@ -87,7 +87,7 @@ public class SubActivity extends Activity {
                     DBHelper dbHelper = new DBHelper(view.getContext(), "unvinDB",null, 1);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
                     db.execSQL(dbHelper.insertAccountSQL, new String[]{"0",editTextCost.getText().toString(), editTextDetail.getText().toString(),
-                            datemsg+timemsg, String.valueOf(selected_cat_idx)});
+                            date.getText().toString()+time.getText().toString(), String.valueOf(selected_cat_idx)});
                     db.close();
                     Toast.makeText(view.getContext(), "수입 추가되었습니다", Toast.LENGTH_LONG).show();
                 }
