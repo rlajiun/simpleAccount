@@ -42,8 +42,12 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public String insertAccountSQL = "insert into account(flag, value, detail, datetime, category) values (?, ?, ?, ?, ?)";
-    public String selectAccountSQL = "select flag, value, detail, datetime, category from account";
+    public String selectAccountSQL = "select flag, value, detail, datetime, category from account";  // 내역 전체 불러오기
     public String selectShareSQL = "SELECT * FROM share";
     public String insertShareSQL = "INSERT INTO share (flag, value, who, detail, datetime)"+
             "VALUES (?, ?, ?, ?, ?)";
+    public String selectInAccountSQL = "select value, detail, datetime, category from account where flag=0";   // 수입 내역만 불러오기
+    public String selectConAccountSQL = "select value, detail, datetime, category from account where flag=1";   // 지출 내역만 불러오기
+    public String selectGetShareSQL = "select value from share where flag=0"; // 받을 돈
+    public String selectSendShareSQL = "select value from share where flag=1"; // 보낼 돈
 }

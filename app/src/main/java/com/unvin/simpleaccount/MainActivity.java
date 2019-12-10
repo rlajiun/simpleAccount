@@ -23,6 +23,7 @@ import com.unvin.simpleaccount.Activity.InvoiceActivity;
 import com.unvin.simpleaccount.adapter.CheckListAdapter;
 import com.unvin.simpleaccount.database.DBHelper;
 import com.unvin.simpleaccount.models.checkList;
+import com.unvin.simpleaccount.models.day;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MainActivity extends Activity {
     /**
      * 일 저장 할 리스트
      */
-    private ArrayList<String> dayList;
+    private ArrayList<day> dayList;
 
     /**
      * 그리드뷰
@@ -125,7 +126,7 @@ public class MainActivity extends Activity {
         tvDate.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
 
         //gridview 요일 표시
-        dayList = new ArrayList<String>();
+        dayList = new ArrayList<day>();
 
         mCal = Calendar.getInstance();
 
@@ -134,7 +135,7 @@ public class MainActivity extends Activity {
         int dayNum = mCal.get(Calendar.DAY_OF_WEEK);
         //1일 - 요일 매칭 시키기 위해 공백 add
         for (int i = 1; i < dayNum; i++) {
-            dayList.add("");
+            dayList.add(new day("","","", ""));
         }
         setCalendarDate(mCal.get(Calendar.MONTH) + 1);
 
@@ -161,9 +162,9 @@ public class MainActivity extends Activity {
                     cursor.getString(2)+"원", whatString, datetimeStrimg+"까지")));
         }
 
-        moneyDataList.add(new checkList(R.drawable.sendmoney, "막내동생한테","10,000원","보내기","17일까지"));
-        moneyDataList.add(new checkList(R.drawable.getmoney, "친구한테","30,000원","받기", "18일까지"));
-        moneyDataList.add(new checkList(R.drawable.getmoney, "펭수한테","20,000원","받기", "17일까지"));
+//        moneyDataList.add(new checkList(R.drawable.sendmoney, "막내동생한테","10,000원","보내기","17일까지"));
+//        moneyDataList.add(new checkList(R.drawable.getmoney, "친구한테","30,000원","받기", "18일까지"));
+//        moneyDataList.add(new checkList(R.drawable.getmoney, "펭수한테","20,000원","받기", "17일까지"));
     }
 
     /**
@@ -175,7 +176,7 @@ public class MainActivity extends Activity {
         mCal.set(Calendar.MONTH, month - 1);
 
         for (int i = 0; i < mCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-            dayList.add("" + (i + 1));
+            dayList.add(new day("" + (i + 1), "", "", ""));
         }
 
     }
@@ -186,7 +187,7 @@ public class MainActivity extends Activity {
      */
     private class GridAdapter extends BaseAdapter {
 
-        private final List<String> list;
+        private final ArrayList<day> list;
 
         private final LayoutInflater inflater;
 
@@ -195,7 +196,7 @@ public class MainActivity extends Activity {
          *  @param context
          * @param list
          */
-        public GridAdapter(Context context, ArrayList<String> list) {
+        public GridAdapter(Context context, ArrayList<day> list) {
             this.list = list;
             this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -206,7 +207,7 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public String getItem(int position) {
+        public day getItem(int position) {
             return list.get(position);
         }
 
@@ -235,14 +236,17 @@ public class MainActivity extends Activity {
             } else {
                 holder = (ViewHolder)convertView.getTag();
             }
-            holder.tvItemGridView.setText("" + getItem(position));
+            holder.tvItemGridView.setText("" + getItem(position).getDay());
+            holder.totalItemGridView.setText("" + getItem(position).getTotal());
+            holder.inItemGridView.setText("" + getItem(position).getIncome());
+            holder.conItemGridView.setText("" + getItem(position).getConsume());
 
             //해당 날짜 텍스트 컬러,배경 변경
             mCal = Calendar.getInstance();
             //오늘 day 가져옴
             Integer today = mCal.get(Calendar.DAY_OF_MONTH);
             String sToday = String.valueOf(today);
-            if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
+            if (sToday.equals(getItem(position).getDay())) { //오늘 day 텍스트 컬러 변경
                 holder.tvItemGridView.setTextColor(getResources().getColor(R.color.color_ffffff));
                 holder.relGridView.setBackgroundColor(getResources().getColor(R.color.income));
                 holder.inItemGridView.setTextColor(getResources().getColor(R.color.color_ffffff));
