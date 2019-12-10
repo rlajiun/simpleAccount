@@ -77,7 +77,8 @@ public class GridAdapter extends BaseAdapter {
         }
         holder.tvItemGridView.setText("" + getItem(position).getDay());
 
-        String queryDayFormat = MainActivity.tvDate.getText().toString().substring(0, 4)+"년 "+MainActivity.tvDate.getText().toString().substring(5)+"월 "+getItem(position).getDay();
+        String queryDayFormat = MainActivity.tvDate.getText().toString().substring(0, 4)+"년 "+
+                MainActivity.tvDate.getText().toString().substring(5)+"월 "+getItem(position).getDay()+"일";
         Log.d("position", queryDayFormat);
         //connect database
         DBHelper dbHelper = new DBHelper(convertView.getContext(), "unvinDB", null, 1);
@@ -95,10 +96,12 @@ public class GridAdapter extends BaseAdapter {
         }
 
         totalValue = incomeValue - consumeValue;
-
-        holder.totalItemGridView.setText(String.valueOf(totalValue));
-        holder.inItemGridView.setText(String.valueOf(incomeValue));
-        holder.conItemGridView.setText(String.valueOf(consumeValue));
+        if(totalValue != 0)
+            holder.totalItemGridView.setText(String.valueOf(totalValue));
+        if(incomeValue != 0)
+            holder.inItemGridView.setText(String.valueOf(incomeValue));
+        if(consumeValue != 0)
+            holder.conItemGridView.setText(String.valueOf(consumeValue));
 
         //해당 날짜 텍스트 컬러,배경 변경
         cal = Calendar.getInstance();
