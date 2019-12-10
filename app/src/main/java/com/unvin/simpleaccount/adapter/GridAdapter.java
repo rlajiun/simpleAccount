@@ -1,6 +1,9 @@
 package com.unvin.simpleaccount.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +13,15 @@ import android.widget.TextView;
 
 import com.unvin.simpleaccount.MainActivity;
 import com.unvin.simpleaccount.R;
+import com.unvin.simpleaccount.database.DBHelper;
 import com.unvin.simpleaccount.models.day;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class GridAdapter extends BaseAdapter {
 
@@ -21,7 +29,6 @@ public class GridAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
     private Calendar cal;
-
     /**
      * 생성자
      *  @param context
@@ -69,9 +76,29 @@ public class GridAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
         holder.tvItemGridView.setText("" + getItem(position).getDay());
-//        holder.totalItemGridView.setText(list.get(position).getTotal());
-//        holder.inItemGridView.setText(list.get(position).getIncome());
-//        holder.conItemGridView.setText(list.get(position).getConsume());
+
+        String queryDayFormat = MainActivity.tvDate.getText().toString().substring(0, 4)+"년 "+MainActivity.tvDate.getText().toString().substring(5)+"월 "+getItem(position).getDay();
+        Log.d("position", queryDayFormat);
+        //connect database
+        DBHelper dbHelper = new DBHelper(convertView.getContext(), "unvinDB", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(dbHelper.selectValueOneDaySQL, new String[] {queryDayFormat+"%"});
+
+        int incomeValue = 0;    //flag: 0
+        int consumeValue = 0;   //flag: 1
+        int totalValue = 0;
+        while(cursor.moveToNext()){
+            if(cursor.getString(0).equals("0"))
+                incomeValue += Integer.parseInt(cursor.getString(1));
+            else
+                consumeValue += Integer.parseInt(cursor.getString(1));
+        }
+
+        totalValue = incomeValue - consumeValue;
+
+        holder.totalItemGridView.setText(String.valueOf(totalValue));
+        holder.inItemGridView.setText(String.valueOf(incomeValue));
+        holder.conItemGridView.setText(String.valueOf(consumeValue));
 
         //해당 날짜 텍스트 컬러,배경 변경
         cal = Calendar.getInstance();

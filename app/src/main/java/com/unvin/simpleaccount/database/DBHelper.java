@@ -46,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public String selectShareSQL = "SELECT * FROM share";
     public String insertShareSQL = "INSERT INTO share (flag, value, who, detail, datetime)"+
             "VALUES (?, ?, ?, ?, ?)";
+    public String selectValueOneDaySQL = "SELECT flag, value FROM account WHERE datetime LIKE ?";
     public String selectInAccountSQL = "select value, detail, datetime, category from account where flag=0";   // 수입 내역만 불러오기
     public String selectConAccountSQL = "select value, detail, datetime, category from account where flag=1";   // 지출 내역만 불러오기
     public String selectGetShareSQL = "select value from share where flag=0"; // 받을 돈

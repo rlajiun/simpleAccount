@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
     /**
      * 연/월 텍스트뷰
      */
-    private TextView tvDate;
+    static public TextView tvDate;
     /**
      * 그리드뷰 어댑터
      */
@@ -159,6 +160,7 @@ public class MainActivity extends Activity {
             String datetimeStrimg = cursor.getString(5).substring(6);
             moneyDataList.add((new checkList(getResources().getIdentifier("@drawable/"+drawableString, "drawable", this.getPackageName())
                     , cursor.getString(3)+"한테",
+
                     cursor.getString(2)+"원", whatString, datetimeStrimg+"까지")));
         }
 
